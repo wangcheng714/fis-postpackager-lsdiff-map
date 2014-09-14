@@ -1,0 +1,14 @@
+{
+    "name": "fis-postpackager-lsdiff-map",
+    "version": "0.0.1",
+    "description": "a postpackager plugin for generator localStorage diff map",
+    "main": "index.js",
+    "keywords": [
+        "fis",
+        "postpackager",
+        "localStorage",
+        "diff"
+    ],
+    "author": "wangcheng",
+    "license": "MIT"
+}
