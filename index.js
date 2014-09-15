@@ -44,7 +44,14 @@ module.exports = function (ret, conf, settings, opt) {
                     hash
                 ]
             };
+
+            //map.json增加hash和key项
+            if(ret.map.res[id]){
+                ret.map.res[id]["hash"] = hash;
+                ret.map.res[id]["key"] = key;
+            }
         }
+
     });
     /**
      *  2. 遍历pkg
@@ -54,7 +61,7 @@ module.exports = function (ret, conf, settings, opt) {
      *       对比uri相同的，拿到has列表
      */
     fis.util.map(ret.pkg, function(id, file){
-        var type = file.ext.replace(".", ""),
+        var type = file.rExt.replace(".", ""),
             key = replaceKey(file.id),
             hash = file.getHash(),
             has = [];
@@ -69,6 +76,9 @@ module.exports = function (ret, conf, settings, opt) {
             var pkgInfo = ret.map.pkg[tmpKey];
             if(pkgInfo["uri"] == hashRelease){
                 has = pkgInfo["has"];
+                //map.json增加hash和key项
+                ret.map.pkg[tmpKey]["hash"] = hash;
+                ret.map.pkg[tmpKey]["key"] = key;
                 break;
             }
         }
