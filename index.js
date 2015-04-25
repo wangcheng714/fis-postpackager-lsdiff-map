@@ -74,13 +74,14 @@ module.exports = function (ret, conf, settings, opt) {
         }
         for(var tmpKey in ret.map.pkg){
             var pkgInfo = ret.map.pkg[tmpKey];
-            if(pkgInfo["uri"] == hashRelease){
+            //在--domains情况下,pkgInfo["uri"] != hashRelease
+            //if(pkgInfo["uri"] == hashRelease){
                 has = pkgInfo["has"];
                 //map.json增加hash和key项
                 ret.map.pkg[tmpKey]["hash"] = hash;
                 ret.map.pkg[tmpKey]["key"] = key;
-                break;
-            }
+            //   break;
+            //}
         }
 
         var hashList = [],
