@@ -11,10 +11,12 @@ var fs = require("fs"),
 module.exports = function (ret, conf, settings, opt) {
 
     var LIST_EXT = "lslist.json",
-        DATA_EXT = "lsdata.json";
+        DATA_EXT = "lsdata.json",
+        releaseDir = settings.dir || "/config";
 
     var root = fis.project.getProjectPath(),
         ns  = fis.config.get("namespace"),
+        product = fis.config.get("product"),
         md5Connector = fis.config.get("project.md5Connector");
 
     function replaceKey(id){
@@ -128,12 +130,13 @@ module.exports = function (ret, conf, settings, opt) {
         dataObj[fileId][fileInfo["hash"]] =  fileInfo["content"];
     });
 
-    var lslistFile = fis.file(root, (ns ? ns + "." : "") + LIST_EXT),
-        lsdataFile = fis.file(root, (ns ? ns + "." : "") + DATA_EXT);
+    var fileDir = root + (product ? "/" + product : ""),
+        lslistFile = fis.file(fileDir, (ns ? ns + "." : "") + LIST_EXT),
+        lsdataFile = fis.file(fileDir, (ns ? ns + "." : "") + DATA_EXT);
 
-    lslistFile.release = "/config" + lslistFile.subpath;
+    lslistFile.release = releaseDir + lslistFile.subpath;
     lslistFile.setContent(JSON.stringify(listObj));
-    lsdataFile.release = "/config" + lsdataFile.subpath;
+    lsdataFile.release = releaseDir + lsdataFile.subpath;
     lsdataFile.setContent(JSON.stringify(dataObj));
 
     ret.pkg[lslistFile.subpath] = lslistFile;
